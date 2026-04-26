@@ -32,16 +32,17 @@ jobs:
     - name: Build executable with PyInstaller
       run: pyinstaller --onefile --noconsole pixelpin.py
 
-    - name: Prepare Release Folder
+    - name: Prepare and Zip Release Folder
       shell: bash
       run: |
         mkdir PixelPin
         cp -r dist/* PixelPin/
         cp README.md PixelPin/ || true
         cp LICENSE PixelPin/ || true
+        zip -r PixelPin-${{ matrix.os }}.zip PixelPin/
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
       with:
-        name: PixelPin-${{ matrix.os }}
-        path: PixelPin/
+        name: PixelPin-${{ matrix.os }}-Archive
+        path: PixelPin-${{ matrix.os }}.zip
