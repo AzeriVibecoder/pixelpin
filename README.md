@@ -1,6 +1,6 @@
 ```
   ██████╗ ██╗██╗  ██╗███████╗██╗     ██████╗ ██╗███╗   ██╗
-  ██╔══██╗██║╚██╗██╔╝██╔════╝██║    ██╔══██╗██║████╗  ██║
+  ██╔══██╗██║╚██╗██╔╝██╔════╝██║     ██╔══██╗██║████╗  ██║
   ██████╔╝██║ ╚███╔╝ █████╗  ██║     ██████╔╝██║██╔██╗ ██║
   ██╔═══╝ ██║ ██╔██╗ ██╔══╝  ██║     ██╔═══╝ ██║██║╚██╗██║
   ██║     ██║██╔╝ ██╗███████╗███████╗██║     ██║██║ ╚████║
@@ -17,39 +17,47 @@
 
 ---
 
-PixelPin is a minimal always-on-top overlay that shows the current cursor position in real time. Right-click anywhere on the screen to copy the coordinates to your clipboard.
+PixelPin is a minimal always-on-top overlay that shows the current cursor position in real time. Right-click anywhere on the screen to copy the coordinates to your clipboard, and optionally auto-save them to a text file.
 
-## Usage
-
-```bash
+```shell
 git clone https://github.com/AzeriVibecoder/pixelpin
 cd pixelpin
-pip install pynput
+pip install pynput pystray Pillow
 python pixelpin.py
 ```
+### Default Controls
 
-| Action | Result |
-|---|---|
-| Move mouse | Live `x, y` shown above the cursor |
-| Right-click | Coordinates copied to clipboard |
-| `Esc` or middle-click | Quit |
+| Action      | Result                                       |
+| ----------- | -------------------------------------------- |
+| Move mouse  | Live x, y shown above the cursor             |
+| Right-click | Copy coordinates to clipboard                |
+| Tab         | Open settings menu                           |
+| Esc         | Pause / resume overlay                       |
+| Z           | Undo (removes the last saved line from file) |
 
-The copied format is plain `x, y`.
+The copied format is plain `x, y`.
 
+Note: Copy and Undo triggers can be remapped to any key or mouse button in the Settings (Tab). To quit the app, use the system tray icon or the Settings menu.
+## Features
+
+- **Live Tracking:** A borderless, transparent tooltip follows the cursor without interfering with windows underneath.
+- **Auto-save & Undo:** Automatically append every copied coordinate to a .txt file. Make a mistake? Press Z to instantly delete the last entry.
+- **Customizable Triggers:** Bind the copy and undo actions to any keyboard key or mouse button.
+- **Pause Mode:** Hit Esc to freeze the overlay when you don't need it.
+- **System Tray:** Runs quietly in the background. Right-click the tray icon to open settings or exit.
 ## How it works
 
-A borderless, transparent window follows the cursor across the entire screen without interfering with anything underneath. Mouse and keyboard events are captured globally via [pynput](https://github.com/moses-palmer/pynput), so the tool works regardless of which window is in focus. The clipboard is handled through tkinter's built-in API — no additional dependencies.
-
+Mouse and keyboard events are captured globally via [pynput](https://www.google.com/url?sa=E&q=https%3A%2F%2Fgithub.com%2Fmoses-palmer%2Fpynput), meaning the tool works regardless of which window is in focus. The clipboard and UI are handled through tkinter's built-in API. The system tray icon is managed via pystray and runs in a separate thread to ensure smooth performance.
 ## Requirements
 
 - Python 3.8+
-- `pynput`
-- `tkinter` — included in standard Python. On some Linux systems: `sudo apt install python3-tk`
-
+- pynput
+- pystray
+- Pillow
+- tkinter — included in standard Python. On some Linux systems, you might need: sudo apt install python3-tk
 ## Platform notes
 
 Tested on Windows and Linux (X11). On macOS, the system will prompt for Accessibility permissions on first run — pynput requires them to read global mouse events. Wayland support depends on the compositor.
-
 ## License
 
 Apache-2.0 license
