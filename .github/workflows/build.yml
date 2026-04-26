@@ -39,7 +39,7 @@ jobs:
         cp -r dist/* PixelPin/
         cp README.md PixelPin/ || true
         cp LICENSE PixelPin/ || true
-        zip -r PixelPin-${{ matrix.os }}.zip PixelPin/
+        python -m zipfile -c PixelPin-${{ matrix.os }}.zip PixelPin/
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
