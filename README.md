@@ -20,7 +20,7 @@
 PixelPin is a minimal always-on-top overlay that shows the current cursor position in real time. Right-click anywhere on the screen to copy the coordinates to your clipboard, and optionally auto-save them to a text file.
 
 ```shell
-git clone https://github.com/AzeriVibecoder/pixelpin
+git clone https://github.com/Vibecodemaxxxer/pixelpin
 cd pixelpin
 pip install pynput pystray Pillow
 python pixelpin.py
